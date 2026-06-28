@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import { SITE, BUSINESS } from "@/lib/constants";
 import { Inter } from 'next/font/google';
-
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ['latin'] });
 /* ─── Global Metadata (Next.js Metadata API) ────────────────────────────── */
@@ -121,6 +121,9 @@ export default function RootLayout({ children }) {
 
         {/* Floating WhatsApp Button */}
         <FloatingWhatsApp />
+           <GoogleAnalytics
+        gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+      />
       </body>
     </html>
   );
