@@ -5,7 +5,7 @@ import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import { SITE, BUSINESS } from "@/lib/constants";
 import { Inter } from 'next/font/google';
 import { GoogleAnalytics } from "@next/third-parties/google";
-
+import Script from "next/script";
 const inter = Inter({ subsets: ['latin'] });
 /* ─── Global Metadata (Next.js Metadata API) ────────────────────────────── */
 export const metadata = {
@@ -124,6 +124,15 @@ export default function RootLayout({ children }) {
            <GoogleAnalytics
         gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
       />
+      <Script id="microsoft-clarity" strategy="afterInteractive">
+  {`
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
+  `}
+</Script>
       </body>
     </html>
   );
