@@ -1,0 +1,15 @@
+{
+  "name": "Bilal Painting & Decorating",
+  "short_name": "Bilal Painting",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0F172A",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

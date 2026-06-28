@@ -1,0 +1,390 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts Import ────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ─── Base Resets & Defaults ─────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #0f172a;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Smooth focus rings for accessibility */
+  :focus-visible {
+    outline: 2px solid #f97316;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+}
+
+/* ─── Component Utilities ────────────────────────────────────────────────── */
+@layer components {
+  /* Container with consistent padding */
+  .container-custom {
+    @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section padding — consistent spacing system */
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-28;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-accent transition-all duration-300 hover:bg-accent-dark hover:shadow-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:translate-y-0;
+  }
+
+  /* Secondary button — outlined */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 active:scale-95;
+  }
+
+  /* Outline button on light backgrounds */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary px-6 py-3 text-base font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95;
+  }
+
+  /* Card base */
+  .card {
+    @apply rounded-2xl bg-white p-6 shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  /* Badge chip */
+  .badge {
+    @apply inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent;
+  }
+
+  /* Divider line with accent */
+  .accent-divider {
+    @apply h-1 w-16 rounded-full bg-accent;
+  }
+
+  /* Form field base */
+  .form-field {
+    @apply w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-primary placeholder-neutral-400 transition-all duration-200 focus:border-accent focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/20;
+  }
+
+  /* Navbar link */
+  .nav-link {
+    @apply relative text-sm font-medium text-neutral-200 transition-colors duration-200 hover:text-white;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-0.5 w-0 rounded-full bg-accent transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  .nav-link.active {
+    @apply text-white;
+  }
+}
+
+/* ─── Utility Extensions ─────────────────────────────────────────────────── */
+@layer utilities {
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Scrollbar hiding for carousels */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Backdrop blur for navbar */
+  .backdrop-blur-nav {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+
+  /* Hero overlay gradient */
+  .hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.93) 0%,
+      rgba(15, 23, 42, 0.78) 50%,
+      rgba(15, 23, 42, 0.62) 100%
+    );
+  }
+
+  /* Paint stroke accent — decorative underline */
+  .paint-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .paint-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    border-radius: 2px;
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Animated entrance classes */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ─── WhatsApp Float Animation ───────────────────────────────────────────── */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-pulse {
+  animation: whatsapp-pulse 2s infinite;
+}
+
+/* ─── Page Transition ────────────────────────────────────────────────────── */
+main {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Tailwind base + your existing styles */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-15px); }
+}
+
+.animate-fadeInUp    { animation: fadeInUp 0.8s ease forwards; }
+.animate-fadeInLeft  { animation: fadeInLeft 0.8s ease forwards; }
+.animate-fadeInRight { animation: fadeInRight 0.8s ease forwards; }
+.animate-float       { animation: float 6s ease-in-out infinite; }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+.animation-delay-200  { animation-delay: 0.2s; }
+.animation-delay-400  { animation-delay: 0.4s; }
+.animation-delay-600  { animation-delay: 0.6s; }
+.animation-delay-800  { animation-delay: 0.8s; }
+.animation-delay-1000 { animation-delay: 1.0s; }
+.animation-delay-1200 { animation-delay: 1.2s; }
+.animation-delay-2000 { animation-delay: 2.0s; }
+.animation-delay-4000 { animation-delay: 4.0s; }
+
+/* Card shadows */
+.shadow-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.shadow-card-hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+/* Animation classes */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Enhanced fadeInUp with better easing */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Smooth entrance with stagger */
+.animate-stagger {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Card hover effect - subtle glow */
+.shadow-card-hover {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.08),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02),
+    0 0 0 1px rgba(249, 115, 22, 0.05);
+}
+
+/* Optional: Add a shimmer effect on cards */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Enhanced button hover */
+.btn-outline-enhanced {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/20 px-6 py-3 text-base font-semibold text-primary transition-all duration-300 hover:border-accent hover:bg-accent hover:text-white hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-0.5;
+}
+/* Navbar link styles */
+.nav-link {
+  @apply relative text-sm font-medium text-neutral-200 transition-colors duration-200 hover:text-white;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute -bottom-0.5 left-0 h-0.5 w-0 rounded-full bg-accent transition-all duration-300;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  @apply w-full;
+}
+
+.nav-link.active {
+  @apply text-white;
+}
+
+/* Backdrop blur for navbar */
+.backdrop-blur-nav {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+/* Button styles */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-accent transition-all duration-300 hover:bg-accent-dark hover:shadow-lg hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:translate-y-0;
+}
