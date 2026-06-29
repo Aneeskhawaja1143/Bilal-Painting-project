@@ -32,7 +32,7 @@ export default function Hero() {
       </div>
 
       {/* ── Hero Content ── */}
-      <div className="container-custom relative z-10 pt-28 pb-10 sm:pt-20 sm:pb-16 md:pt-28 md:pb-24 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+     <div className="container-custom relative z-10 pt-28 pb-10 sm:pt-32 sm:pb-16 md:pt-38 md:pb-24 lg:pt-32 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
         
         {/* ── Left Side: Text Content ── */}
         <div className="max-w-3xl animate-fadeInLeft">
