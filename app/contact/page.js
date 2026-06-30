@@ -7,8 +7,8 @@ import { ChevronRight, MessageSquare } from "lucide-react";
 
 /* ─── Page Metadata ──────────────────────────────────────────────────────── */
 export const metadata = {
-   title: "Contact Bilal Painting & Decorating | Free Quote Birmingham",
-  description: "Contact Bilal Painting & Decorating for professional interior painting, exterior painting, wallpaper installation and commercial decorating in Birmingham and the West Midlands. Free quotes with responses within 24 hours..",
+   title: "Contact Bilal Painting | Painters & Decorators Birmingham",
+  description: "Contact Bilal Painting & Decorating for a free quote in Birmingham. Call for interior painting, exterior painting, commercial decorating and wallpaper installation.",
   keywords: [
       "contact painters Birmingham",
       "painting quote Birmingham",

@@ -7,9 +7,8 @@ import Transformations from "@/components/home/Transformations"; // ← Add this
 
 /* ─── Page-level Metadata ────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Bilal Painting & Decorating | UK — Premium Painters & Decorators",
-  description:
-    "Expert painting and decorating services across the UK. Interior, exterior, commercial decorating and wallpaper installation. Free quotes, fully insured, 14+ years experience.",
+  title: "Painters Birmingham | Painting & Decorating Services | Bilal Painting",
+  description: "Trusted painters and decorators in Birmingham offering interior painting, exterior painting, commercial decorating and wallpaper installation. Free quotes, fully insured, 14+ years' experience. Call today!",
   alternates: {
     canonical: "/",
   },

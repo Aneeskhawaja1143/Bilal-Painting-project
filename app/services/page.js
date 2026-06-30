@@ -6,8 +6,8 @@ import PreFooterCTA from "@/components/home/PreFooterCTA";
 
 /* ─── Page Metadata ──────────────────────────────────────────────────────── */
 export const metadata = {
-  title: "Painting & Decorating Services in Birmingham | Bilal Painting",
-  description: "Professional interior painting, exterior painting, wallpaper installation and commercial decorating services in Birmingham and the West Midlands. Free quotations, fully insured and trusted for over 14 years.",
+title: "Painters & Decorating Services Birmingham | Bilal Painting",
+  description: "Need reliable painters and decorators in Birmingham? We provide interior, exterior, commercial painting and wallpaper installation with premium finishes, free quotes and 14+ years' experience.",
   
    keywords: [
   "painters and decorators Birmingham",
