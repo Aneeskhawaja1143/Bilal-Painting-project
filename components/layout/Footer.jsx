@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"; // <--- Yeh line add karni hai
 import {
   PaintBucket,
   MapPin,
@@ -46,20 +47,17 @@ export default function Footer() {
             {/* Logo with hover effect */}
             <Link
               href="/"
-              className="group mb-5 flex items-center gap-2.5 w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg transition-transform duration-300 hover:scale-[1.02]"
+              className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-lg transition-transform duration-300 hover:scale-[1.02]"
               aria-label="Bilal Painting & Decorating — Home"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent transition-all duration-300 group-hover:bg-accent-dark group-hover:shadow-lg group-hover:shadow-accent/30">
-                <PaintBucket size={20} className="text-white transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-              </span>
-              <div className="flex flex-col leading-none">
-                <span className="text-base font-bold text-white tracking-tight md:text-lg">
-                  Bilal Painting
-                </span>
-                <span className="text-[10px] text-accent font-medium tracking-[0.2em] uppercase md:text-xs">
-                  &amp; Decorating
-                </span>
-              </div>
+              <Image 
+                  src="/images/logo.png" // <--- Yahan se '/public' hata diya hai
+                  alt="Bilal Painting Logo" 
+                  width={220} 
+                  height={70} 
+                  className="w-[150px] md:w-[180px] lg:w-[200px] h-auto object-contain" 
+                  priority 
+                />
             </Link>
 
             <p className="text-sm leading-relaxed text-neutral-400 mb-6 max-w-xs sm:text-base">

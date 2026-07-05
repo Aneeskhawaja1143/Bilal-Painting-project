@@ -58,7 +58,8 @@ export default function ServicesOverview() {
             return (
               <article
                 key={service.id}
-                className="group relative flex flex-col rounded-2xl bg-white p-6 shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 md:p-7 lg:p-8"
+                // UI FIX: Added border, clear shadow-md, and stronger hover shadow (shadow-2xl)
+                className="group relative flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-md p-6 transition-all duration-500 hover:shadow-2xl hover:border-accent/40 hover:-translate-y-2 md:p-7 lg:p-8"
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   opacity: 0,

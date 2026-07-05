@@ -103,7 +103,7 @@ export default function ServicesHero() {
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3.5 py-1.5 border border-accent/20">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" aria-hidden="true" />
               <span className="text-xs font-semibold uppercase tracking-[0.15em] text-accent">
-                Professional Painting Services
+                Expert Services for Homes & Businesses
               </span>
             </div>
 
@@ -111,37 +111,37 @@ export default function ServicesHero() {
               id="services-hero-heading"
               className="text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              Our{" "}
+              Professional{" "}
               <span className="relative text-accent">
-                Services
+                Painting & Decorating
                 <span
                   className="absolute -bottom-1 left-0 right-0 h-1.5 rounded-full bg-accent/40"
                   aria-hidden="true"
                 />
               </span>
+              <br className="hidden md:block" />
+              {" "}Services
             </h1>
             
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg md:text-xl animate-fadeInUp animation-delay-200">
-              Comprehensive painting and decorating solutions for homes and businesses
-              across the UK. Every service is carried out by our skilled tradespeople
-              using premium materials and proven techniques.
+              Delivering professional interior painting, exterior decorating, commercial painting, wallpaper installation, and property maintenance services across Birmingham. Our experienced painters combine premium materials, expert craftsmanship, and attention to detail to achieve flawless, long-lasting results for every residential and commercial project.
             </p>
 
-            {/* Quick stats */}
+            {/* Quick stats (SEO Optimized) */}
             <div className="mt-6 flex flex-wrap items-center gap-6 sm:gap-8 animate-fadeInUp animation-delay-400">
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-bold text-accent">500+</span>
-                <span className="text-sm text-neutral-400">Projects</span>
+                <span className="text-sm text-neutral-400">Completed Projects</span>
               </div>
               <div className="h-6 w-px bg-white/10" aria-hidden="true" />
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-accent">14</span>
-                <span className="text-sm text-neutral-400">Years Experience</span>
+                <span className="text-2xl font-bold text-accent">14+</span>
+                <span className="text-sm text-neutral-400">Years of Experience</span>
               </div>
               <div className="h-6 w-px bg-white/10" aria-hidden="true" />
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-bold text-accent">100%</span>
-                <span className="text-sm text-neutral-400">Satisfaction</span>
+                <span className="text-sm text-neutral-400">Commitment to Customer Satisfaction</span>
               </div>
             </div>
           </div>

@@ -160,7 +160,7 @@ export default function ContactForm() {
             Message Sent Successfully!
           </h3>
           <p className="max-w-xs text-sm leading-relaxed text-neutral-500">
-            Thank you for getting in touch. We&apos;ll review your enquiry and
+            Thank you for getting in touch. We'll review your enquiry and
             get back to you within 24 hours.
           </p>
         </div>
@@ -177,10 +177,17 @@ export default function ContactForm() {
 
   return (
     <div className="rounded-2xl border border-neutral-100 bg-white p-6 shadow-card sm:p-8">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-primary">Send Us a Message</h2>
-        <p className="mt-1.5 text-sm text-neutral-500">
-          Fill in the form and we&apos;ll get back to you within 24 hours.
+      
+      {/* ─── SEO Optimized Header ─── */}
+      <div className="mb-8">
+        <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-accent">
+          Get in Touch
+        </span>
+        <h1 className="text-2xl font-bold text-primary sm:text-3xl">
+          Contact Bilal Painting & Decorating
+        </h1>
+        <p className="mt-3 text-sm text-neutral-500 leading-relaxed sm:text-base">
+          Looking for reliable painters and decorators in Birmingham? Contact Bilal Painting & Decorating today for a free, no-obligation quote. Whether you need interior or exterior painting, commercial decorating, wallpaper installation, or residential painting services, our experienced team is ready to deliver professional craftsmanship and outstanding customer service throughout Birmingham and the West Midlands.
         </p>
       </div>
 
@@ -407,7 +414,7 @@ export default function ContactForm() {
           </p>
         </div>
 
-        {/* ─── NEW: Free Quote Info ─── */}
+        {/* Free Quote Info */}
         <div className="mt-4 p-4 rounded-xl bg-accent/5 border border-accent/20">
           <div className="flex items-start gap-3">
             <MapPin size={18} className="shrink-0 text-accent mt-0.5" />

@@ -79,25 +79,26 @@ export default function WhyChooseUs() {
                 />
 
                 {/* Stat number — prominent display */}
-                <div className="relative z-10 mb-3">
+                <div className="relative z-10 mb-4">
                   <div
-                    className="text-4xl font-black tracking-tighter text-accent md:text-5xl lg:text-5xl"
+                    // UI FIX: Responsive font sizes for stats
+                    className="text-4xl sm:text-5xl font-black tracking-tighter text-accent lg:text-5xl"
                     aria-label={`${item.stat} ${item.statLabel}`}
                   >
                     {item.stat}
-                    <span className="ml-1 text-lg font-semibold text-white/60 md:text-xl">
+                    <span className="ml-2 text-lg sm:text-xl font-semibold text-white/70">
                       {item.statLabel}
                     </span>
                   </div>
                   {/* Decorative line under stat */}
-                  <div className="mt-2 h-0.5 w-12 rounded-full bg-accent/30 transition-all duration-300 group-hover:w-16 group-hover:bg-accent/60" />
+                  <div className="mt-3 h-0.5 w-12 rounded-full bg-accent/40 transition-all duration-300 group-hover:w-16 group-hover:bg-accent/80" />
                 </div>
 
                 {/* Icon with enhanced styling */}
-                <div className="relative z-10 mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 transition-all duration-500 group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/30">
+                <div className="relative z-10 mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-accent/20 transition-all duration-500 group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/40">
                   {Icon && (
                     <Icon 
-                      size={22} 
+                      size={24} 
                       className="text-accent transition-all duration-500 group-hover:scale-110 group-hover:text-white" 
                     />
                   )}
@@ -105,10 +106,11 @@ export default function WhyChooseUs() {
 
                 {/* Title and description */}
                 <div className="relative z-10">
-                  <h3 className="mb-2 text-base font-bold text-white transition-colors duration-300 group-hover:text-accent md:text-lg">
+                  <h3 className="mb-3 text-lg sm:text-xl font-bold text-white transition-colors duration-300 group-hover:text-accent">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-neutral-400 transition-colors duration-300 group-hover:text-neutral-300 md:text-base">
+                  {/* UI FIX: Increased text size and contrast for readability */}
+                  <p className="text-base leading-relaxed text-neutral-300 transition-colors duration-300 group-hover:text-white">
                     {item.description}
                   </p>
                 </div>
@@ -130,19 +132,20 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Bottom trust paragraph - enhanced */}
-        <div className="mt-14 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/20 hover:bg-white/8 sm:p-8 lg:mt-16">
+        <div className="mt-14 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:bg-white/10 sm:p-8 lg:mt-16">
           <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
             <div
-              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-accent/20 transition-all duration-300 group-hover:bg-accent/30 sm:h-14 sm:w-14"
+              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-accent/20 transition-all duration-300 group-hover:bg-accent/40 sm:h-14 sm:w-14"
               aria-hidden="true"
             >
-              <Award size={30} className="text-accent sm:size-7" />
+              <Award size={30} className="text-accent sm:size-8" />
             </div>
             <div className="flex-1">
               <h3 className="mb-2 text-lg font-bold text-white sm:text-xl">
                 Established in {BUSINESS.founded} — Serving Clients Across the UK
               </h3>
-              <p className="text-sm leading-relaxed text-neutral-400 sm:text-base">
+              {/* UI FIX: Increased readability here too */}
+              <p className="text-base leading-relaxed text-neutral-300">
                 With {BUSINESS.yearsExperience} years in the trade and over{" "}
                 {BUSINESS.projectsCompleted} completed projects, Bilal Painting &amp;
                 Decorating has the expertise to handle any job, big or small.
@@ -151,10 +154,10 @@ export default function WhyChooseUs() {
             </div>
             {/* Decorative element */}
             <div
-              className="hidden lg:flex h-12 w-12 items-center justify-center rounded-full border border-white/10"
+              className="hidden lg:flex h-12 w-12 items-center justify-center rounded-full border border-white/20"
               aria-hidden="true"
             >
-              <div className="h-2 w-2 rounded-full bg-accent/40" />
+              <div className="h-3 w-3 rounded-full bg-accent/60" />
             </div>
           </div>
         </div>

@@ -72,16 +72,19 @@ export default function Transformations() {
         />
 
         <div className="mt-12">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* Left: Image */}
-            <div className="relative">
-              <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-2xl">
+          {/* UI FIX: Changed from lg:grid-cols-2 to a 12-column grid for better width control */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+            
+            {/* Left: Image (Made wider using col-span-7) */}
+            <div className="relative lg:col-span-7">
+              {/* UI FIX: Added md:aspect-[16/10] for a wider cinematic look on bigger screens */}
+              <div className="relative aspect-[4/3] md:aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                         src={showAfter ? currentProject.after : currentProject.before}
                         alt={showAfter ? `After ${currentProject.title} by Bilal Painting & Decorating UK` : `Before ${currentProject.title} by Bilal Painting & Decorating UK`}
                         fill
                         className="object-cover transition-all duration-700"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        sizes="(max-width: 1024px) 100vw, 60vw"
                         />  
                 
                 {/* Before/After Label */}
@@ -152,8 +155,8 @@ export default function Transformations() {
               </div>
             </div>
 
-            {/* Right: Info */}
-            <div className="flex flex-col justify-center">
+            {/* Right: Info (Takes remaining space col-span-5) */}
+            <div className="flex flex-col justify-center lg:col-span-5">
               <h3 className="text-2xl font-bold text-primary sm:text-3xl">
                 {currentProject.title}
               </h3>
@@ -180,6 +183,7 @@ export default function Transformations() {
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
             </div>
+            
           </div>
         </div>
       </div>

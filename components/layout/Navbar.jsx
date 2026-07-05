@@ -85,24 +85,24 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* ── Desktop CTA ── */}
-            <div className="hidden md:flex items-center gap-4 lg:gap-5">
-              <a
-                href={`tel:${BUSINESS.phone}`}
-                className="flex items-center gap-2 text-sm font-medium text-neutral-200 transition-all duration-300 hover:text-white hover:gap-2.5 lg:text-base"
-                aria-label={`Call us on ${BUSINESS.phoneDisplay}`}
-              >
-                <Phone size={15} className="text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                <span>{BUSINESS.phoneDisplay}</span>
-              </a>
-              <Link
-                href="/contact"
-                className="btn-primary py-2.5 px-5 text-sm lg:py-3 lg:px-6 lg:text-base transition-all duration-300 hover:shadow-lg hover:shadow-accent/30"
-              >
-                Free Quote
-              </Link>
-            </div>
-
+           {/* ── Desktop CTA ── */}
+<div className="hidden md:flex items-center gap-2 lg:gap-3">
+  <a
+    href={`tel:${BUSINESS.phone}`}
+    className="flex items-center gap-2 text-sm font-medium text-neutral-200 transition-all duration-300 hover:text-white hover:gap-2.5 lg:text-base"
+    aria-label={`Call us on ${BUSINESS.phoneDisplay}`}
+  >
+    <Phone size={15} className="text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+    <span>{BUSINESS.phoneDisplay}</span>
+  </a>
+  <Link
+    href="/contact"
+    className="btn-primary rounded-xl py-2 px-4 text-sm font-semibold shadow-md hover:shadow-lg md:py-3 md:px-5 lg:py-3.5 lg:px-6 lg:text-base"
+    onClick={() => setIsMobileOpen(false)}
+  >
+    <span>Get a Free Quote</span>
+  </Link>
+</div>
             {/* ── Mobile Hamburger ── */}
             <button
               type="button"
@@ -160,13 +160,13 @@ export default function Navbar() {
 
         {/* Menu panel - slides from right */}
         <div
-          className={`absolute right-0 top-0 h-full w-full max-w-sm bg-primary/98 backdrop-blur-nav border-l border-white/10 shadow-2xl transition-all duration-400 ease-out ${
+          className={`absolute right-0 top-0 h-full w-full max-w-[340px] bg-primary/98 backdrop-blur-nav border-l border-white/10 shadow-2xl transition-all duration-400 ease-out ${
             isMobileOpen
               ? "translate-x-0 opacity-100"
               : "translate-x-full opacity-0"
           }`}
         >
-          <div className="flex h-full flex-col overflow-y-auto pt-20 pb-6 px-6">
+          <div className="flex h-full flex-col overflow-y-autopt-[72px] pb-5 px-5">
             {/* Close button inside panel */}
             <button
               type="button"
@@ -183,7 +183,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-base font-medium transition-all duration-300 ${
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium transition-all duration-300 ${
                       isActive(link.href)
                         ? "bg-accent/15 text-white"
                         : "text-neutral-200 hover:bg-white/8 hover:text-white hover:pl-5"
@@ -214,7 +214,7 @@ export default function Navbar() {
               </a>
               <Link
                 href="/contact"
-                className="btn-primary w-full justify-center py-3.5 text-base md:py-4"
+                className="btn-primary w-full justify-center py-3 text-base md:py-4"
                 onClick={() => setIsMobileOpen(false)}
               >
                 Get a Free Quote

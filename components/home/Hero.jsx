@@ -4,11 +4,12 @@ import { Phone, ArrowRight, Star, CheckCircle } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 
 export default function Hero() {
+  // SEO Updates: 4th badge changed to "500+ Projects Completed"
   const trustBadges = [
     "Free Quotations",
     "Fully Insured",
     "14+ Years Experience",
-    "Free Quote Within 5 Miles",
+    "500+ Projects Completed",
   ];
 
   return (
@@ -32,7 +33,7 @@ export default function Hero() {
       </div>
 
       {/* ── Hero Content ── */}
-     <div className="container-custom relative z-10 pt-28 pb-10 sm:pt-32 sm:pb-16 md:pt-38 md:pb-24 lg:pt-32 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+      <div className="container-custom relative z-10 pt-28 pb-10 sm:pt-32 sm:pb-16 md:pt-32 md:pb-24 lg:pt-32 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
         
         {/* ── Left Side: Text Content ── */}
         <div className="max-w-3xl animate-fadeInLeft">
@@ -40,18 +41,17 @@ export default function Hero() {
           <div className="mb-3 sm:mb-5 flex items-center gap-2 animate-fadeInUp animation-delay-200">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-semibold uppercase tracking-widest text-accent border border-accent/20">
               <Star size={9} fill="currentColor" aria-hidden="true" className="sm:size-3" />
-              Trusted Birmingham Painters
+              Expert Services for Homes & Businesses
             </span>
           </div>
 
-          {/* ─── CLEAN HEADING ─── */}
+          {/* ─── CLEAN HEADING (SEO Optimized) ─── */}
           <h1 className="text-balance mb-3 sm:mb-5 font-bold leading-[1.08] tracking-tight text-white animate-fadeInUp animation-delay-400
             text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem]
           ">
-            <span className="text-accent">Painting</span> &amp;{" "}
-            <span className="text-accent">Decorating</span>
+            <span className="text-accent">Professional Painters</span>
             <br />
-            Services in{" "}
+            &amp; Decorators in{" "}
             <span className="relative inline-block text-white">
               Birmingham
               <span
@@ -61,11 +61,9 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* ─── SHORT DESCRIPTION ─── */}
+          {/* ─── SHORT DESCRIPTION (SEO Optimized) ─── */}
           <p className="mb-5 sm:mb-7 max-w-xl text-sm sm:text-base md:text-lg leading-relaxed text-neutral-300 animate-fadeInUp animation-delay-600">
-            Professional interior, exterior, and commercial painting services
-            <span className="hidden sm:inline"> – premium finishes, reliable workmanship, and free quotations.</span>
-            <span className="inline sm:hidden"> – premium finishes, free quotes.</span>
+            Transform your property with Bilal Painting & Decorating, trusted painters and decorators in Birmingham. We specialise in interior and exterior painting, commercial decorating, and wallpaper installation, delivering premium finishes with reliable workmanship.
           </p>
 
           {/* ─── TRUST BADGES – CARD STYLE ─── */}
@@ -90,13 +88,13 @@ export default function Hero() {
             ))}
           </div>
 
-          {/* ─── CTA BUTTONS ─── */}
+          {/* ─── CTA BUTTONS (SEO Optimized) ─── */}
           <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center animate-fadeInUp animation-delay-1000">
             <Link
               href="/contact"
               className="btn-primary px-6 py-3.5 text-sm sm:px-8 sm:py-4 sm:text-base text-center justify-center"
             >
-              Get a Free Quote
+              Get Your Free Quote Today
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
 

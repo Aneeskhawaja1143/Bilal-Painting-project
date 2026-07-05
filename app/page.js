@@ -1,10 +1,12 @@
 import { SITE, BUSINESS } from "@/lib/constants";
 import Hero from "@/components/home/Hero";
+import About from "@/components/About"; // ← Naya About component yahan import kiya hai
 import ServicesOverview from "@/components/home/ServicesOverview";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import PreFooterCTA from "@/components/home/PreFooterCTA";
-import Transformations from "@/components/home/Transformations"; // ← Add this
-
+import Transformations from "@/components/home/Transformations";
+import FAQs from "@/components/FAQs";
+import Portfolio from "@/components/Portfolio";
 /* ─── Page-level Metadata ────────────────────────────────────────────────── */
 export const metadata = {
   title: "Painters Birmingham | Painting & Decorating Services | Bilal Painting",
@@ -65,9 +67,12 @@ export default function HomePage() {
 
       {/* Page sections */}
       <Hero />
+      <About /> 
       <ServicesOverview />
       <WhyChooseUs />
-      <Transformations /> {/* ← Now it works */}
+      <Transformations /> 
+      <Portfolio />
+      <FAQs />
       <PreFooterCTA />
     </>
   );

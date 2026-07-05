@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Phone, ArrowRight, CheckCircle, Shield, Clock, Award, MapPin } from "lucide-react";
+import { Phone, ArrowRight, CheckCircle, Shield, Clock, Award } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 
 /**
@@ -8,11 +8,13 @@ import { BUSINESS } from "@/lib/constants";
  */
 export default function ServicesCTA() {
   const promises = [
-    "Free, no-obligation quotations",
-    "Transparent, competitive pricing",
-    "Friendly and professional team",
-    "Fully insured and certified",
-    "FREE site visit within 5 miles", // ← NEW
+    "Free, No-Obligation Quotations",
+    "Transparent & Competitive Pricing",
+    "Friendly, Experienced Painters",
+    "Fully Insured & Reliable Service",
+    "Free Site Visit Within 5 Miles",
+    "Premium Quality Materials",
+    "Residential & Commercial Specialists",
   ];
   
   const trustBadges = [
@@ -63,9 +65,9 @@ export default function ServicesCTA() {
                 id="services-cta-heading"
                 className="mb-4 text-3xl font-bold text-white sm:text-4xl md:text-4xl lg:text-5xl"
               >
-                Not Sure Which Service{" "}
+                Need Help Choosing the Right{" "}
                 <span className="relative text-accent">
-                  You Need?
+                  Painting Service?
                   <span
                     className="absolute -bottom-1 left-0 right-0 h-1 rounded-full bg-accent/40"
                     aria-hidden="true"
@@ -73,9 +75,7 @@ export default function ServicesCTA() {
                 </span>
               </h2>
               <p className="mb-6 text-base leading-relaxed text-neutral-400 sm:text-lg md:text-xl">
-                We&apos;re here to help. Contact us and we&apos;ll assess your project,
-                recommend the right solution, and provide a detailed free quote — with
-                no pressure and no obligation.
+                Whether you need interior painting, exterior decorating, commercial painting, wallpaper installation, or complete property decorating, our experienced team is here to help. We&apos;ll assess your project, recommend the best solution, and provide a free, no-obligation quotation with transparent pricing and expert advice.
               </p>
 
               {/* Promise list with enhanced styling */}
@@ -136,7 +136,7 @@ export default function ServicesCTA() {
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl bg-accent px-8 py-4 text-base font-bold text-white shadow-accent transition-all duration-300 hover:bg-accent-dark hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:px-7 sm:py-3.5 md:px-8 md:py-4 lg:px-9 lg:py-4.5"
               >
-                Get a Free Quote
+                Get Your Free Quote Today
                 <ArrowRight size={18} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <a
