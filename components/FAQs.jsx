@@ -56,7 +56,7 @@ export default function FAQs() {
   return (
     <section className="section-padding bg-neutral-50" aria-labelledby="faq-heading">
       <div className="container-custom max-w-4xl">
-        <div className="mb-12 text-center animate-fadeInUp">s
+        <div className="mb-12 text-center animate-fadeInUp">
           <h2 id="faq-heading" className="text-3xl font-bold text-primary sm:text-4xl md:text-5xl mb-4">
             Frequently Asked <span className="text-accent">Questions</span>
           </h2>
