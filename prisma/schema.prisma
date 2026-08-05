@@ -1,0 +1,179 @@
+// ─────────────────────────────────────────────────────────────────────────
+// Prisma schema — Bilal Painting & Decorating admin system
+//
+// Phase 1 note: only the `AdminUser` model is used by the application code
+// right now (for login). Every other model below is defined and migrated
+// now — per the approved architecture — so that Phase 2 (content CRUD) and
+// Phase 3 (Cloudinary media) can be built without a second schema change.
+// None of these tables are read by the public site yet.
+// ─────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Auth ───────────────────────────────────────────────────────────────
+
+model AdminUser {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  hashedPassword String
+  name           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ─── Media ──────────────────────────────────────────────────────────────
+// One row per uploaded file (Phase 3: Cloudinary). Content tables below
+// reference this via optional relations so a single asset can be reused.
+
+model MediaAsset {
+  id               String   @id @default(cuid())
+  cloudinaryPublicId String?
+  url              String
+  resourceType     String   @default("image") // "image" | "video"
+  altText          String?
+  width            Int?
+  height           Int?
+  createdAt        DateTime @default(now())
+
+  heroImages            HeroImage[]
+  aboutContent          AboutContent[]
+  portfolioImages       PortfolioImage[]
+  transformationBefore  Transformation[] @relation("TransformationBefore")
+  transformationAfter   Transformation[] @relation("TransformationAfter")
+  testimonialPhotos     Testimonial[]
+}
+
+// ─── Homepage: Hero ─────────────────────────────────────────────────────
+
+model HeroContent {
+  id             String   @id @default(cuid())
+  badge          String
+  headingAccent  String
+  headingMain    String
+  description    String
+  trustBadges    String[]
+  updatedAt      DateTime @updatedAt
+}
+
+model HeroImage {
+  id        String      @id @default(cuid())
+  order     Int         @default(0)
+  altText   String
+  media     MediaAsset  @relation(fields: [mediaId], references: [id])
+  mediaId   String
+}
+
+// ─── Homepage: About ────────────────────────────────────────────────────
+
+model AboutContent {
+  id               String     @id @default(cuid())
+  badge            String
+  heading          String
+  headingAccent    String
+  paragraph1       String
+  paragraph2       String
+  bulletPoints     String[]
+  experienceYears  String
+  image            MediaAsset? @relation(fields: [imageId], references: [id])
+  imageId          String?
+  updatedAt        DateTime   @updatedAt
+}
+
+// ─── Services (drives both homepage overview cards and /services grid) ──
+
+model Service {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  icon         String
+  title        String
+  description  String
+  features     String[]
+  badge        String?
+  order        Int      @default(0)
+  showOnHome   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Homepage: Why Choose Us ────────────────────────────────────────────
+
+model WhyChooseUsItem {
+  id          String   @id @default(cuid())
+  icon        String
+  title       String
+  description String
+  stat        String
+  statLabel   String
+  order       Int      @default(0)
+}
+
+// ─── Portfolio ──────────────────────────────────────────────────────────
+
+model PortfolioImage {
+  id       String     @id @default(cuid())
+  altText  String
+  order    Int        @default(0)
+  media    MediaAsset @relation(fields: [mediaId], references: [id])
+  mediaId  String
+}
+
+// ─── Before / After transformations ─────────────────────────────────────
+
+model Transformation {
+  id            String     @id @default(cuid())
+  title         String
+  description   String
+  category      String
+  order         Int        @default(0)
+  beforeImage   MediaAsset @relation("TransformationBefore", fields: [beforeImageId], references: [id])
+  beforeImageId String
+  afterImage    MediaAsset @relation("TransformationAfter", fields: [afterImageId], references: [id])
+  afterImageId  String
+}
+
+// ─── FAQs ───────────────────────────────────────────────────────────────
+
+model Faq {
+  id       String @id @default(cuid())
+  question String
+  answer   String
+  order    Int    @default(0)
+}
+
+// ─── Testimonials (schema + admin only for now — no public section yet) ─
+
+model Testimonial {
+  id       String      @id @default(cuid())
+  name     String
+  role     String?
+  quote    String
+  rating   Int         @default(5)
+  photo    MediaAsset? @relation(fields: [photoId], references: [id])
+  photoId  String?
+  order    Int         @default(0)
+}
+
+// ─── Contact info (singleton row) ───────────────────────────────────────
+
+model ContactInfo {
+  id                String   @id @default(cuid())
+  phone             String
+  phoneDisplay      String
+  email             String
+  whatsapp          String
+  whatsappMessage   String
+  addressStreet     String
+  addressCity       String
+  addressCounty     String
+  addressPostcode   String
+  addressCountry    String
+  freeQuoteRadius   String
+  updatedAt         DateTime @updatedAt
+}
