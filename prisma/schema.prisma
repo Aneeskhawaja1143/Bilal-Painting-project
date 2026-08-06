@@ -29,18 +29,25 @@ model AdminUser {
 }
 
 // ─── Media ──────────────────────────────────────────────────────────────
-// One row per uploaded file (Phase 3: Cloudinary). Content tables below
-// reference this via optional relations so a single asset can be reused.
+// One row per uploaded file, backed by Cloudinary (Phase 2). Content tables
+// below reference this via optional relations so a single asset can be
+// reused across Hero, About, Portfolio, Before/After, etc. once their
+// admin forms are built (Phase 3+).
 
 model MediaAsset {
-  id               String   @id @default(cuid())
+  id                 String   @id @default(cuid())
   cloudinaryPublicId String?
-  url              String
-  resourceType     String   @default("image") // "image" | "video"
-  altText          String?
-  width            Int?
-  height           Int?
-  createdAt        DateTime @default(now())
+  url                String
+  resourceType       String   @default("image") // "image" | "video"
+  altText            String?
+  width              Int?
+  height             Int?
+  format             String?  // e.g. "jpg", "mp4"
+  bytes              Int?
+  filename           String?  // original filename at upload time, used for search
+  folder             String   @default("general") // Cloudinary folder / library category
+  tags               String[] @default([])
+  createdAt          DateTime @default(now())
 
   heroImages            HeroImage[]
   aboutContent          AboutContent[]

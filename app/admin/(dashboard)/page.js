@@ -74,7 +74,8 @@ const SECTIONS = [
     href: "/admin/media",
     icon: Images,
     description: "Upload and manage images and videos (via Cloudinary).",
-    phase: 3,
+    phase: 2,
+    live: true,
   },
 ];
 
@@ -102,9 +103,15 @@ export default function AdminDashboardPage() {
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10">
                   <Icon size={20} className="text-accent" />
                 </div>
-                <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-                  Phase {section.phase}
-                </span>
+                {section.live ? (
+                  <span className="rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-green-700">
+                    Live
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+                    Phase {section.phase}
+                  </span>
+                )}
               </div>
               <h2 className="mb-1.5 text-base font-bold text-primary">{section.label}</h2>
               <p className="flex-1 text-sm leading-relaxed text-neutral-500">
