@@ -146,7 +146,7 @@ export default function Hero() {
           {/* Image 1 */}
           <div className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl">
             <Image 
-              src="/images/room.jpg" 
+              src="/images/window.jpeg" 
               alt="Living room interior painting transformation by Bilal Painting & Decorating UK" 
               fill 
               className="object-cover"

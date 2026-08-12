@@ -62,7 +62,7 @@ export default function About() {
             
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-xl lg:max-h-[528px] xl:max-h-[592px]">
               <Image
-                src="/images/room.jpg" // Tumhari pehle se mojood image
+                src="/images/window.jpeg" // Tumhari pehle se mojood image
                 alt="Professional painting and decorating work in Birmingham"
                 fill
                 className="object-cover transition-transform duration-700 hover:scale-105"
