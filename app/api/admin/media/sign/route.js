@@ -15,6 +15,7 @@ import { MEDIA_FOLDERS } from "@/lib/cloudinary/constants";
  * since this route hands out a (short-lived, scoped) signature and
  * deserves an explicit check of its own.
  */
+
 export async function POST(request) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -24,6 +25,11 @@ export async function POST(request) {
   const body = await request.json().catch(() => ({}));
   const folder = MEDIA_FOLDERS.includes(body.folder) ? body.folder : "general";
 
+  console.log({
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  secretExists: !!process.env.CLOUDINARY_API_SECRET,
+});
   const payload = createSignedUploadPayload({ folder });
 
   return NextResponse.json(payload);

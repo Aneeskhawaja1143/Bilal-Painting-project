@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import AdminProviders from "../providers";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
+import { getUnreadContactMessageCount } from "@/lib/db/queries/contactMessages";
 
 /**
  * Layout for every authenticated admin page (everything under /admin
@@ -23,10 +24,20 @@ export default async function AdminDashboardLayout({ children }) {
     redirect("/admin/login");
   }
 
+  // Fetched here (Server Component) and passed down, since AdminSidebar is
+  // a Client Component and can't fetch server-side itself — same pattern
+  // used for Navbar/FloatingWhatsApp in app/layout.js.
+  let unreadCount = 0;
+  try {
+    unreadCount = await getUnreadContactMessageCount();
+  } catch (error) {
+    console.error("Failed to load unread contact message count:", error);
+  }
+
   return (
     <AdminProviders>
       <div className="flex min-h-screen bg-neutral-50">
-        <AdminSidebar />
+        <AdminSidebar unreadCount={unreadCount} />
         <div className="flex min-w-0 flex-1 flex-col">
           <AdminHeader />
           <main className="flex-1 p-5 sm:p-8">{children}</main>

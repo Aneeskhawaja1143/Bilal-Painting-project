@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-const FAQ_DATA = [
+const FALLBACK_FAQS = [
   {
     question: "What painting and decorating services do you offer?",
     answer: "We provide professional interior painting, exterior painting, commercial decorating, wallpaper installation, woodwork painting, and property maintenance services for homeowners and businesses across Birmingham and the surrounding areas.",
@@ -46,7 +46,13 @@ const FAQ_DATA = [
   }
 ];
 
-export default function FAQs() {
+/**
+ * @param {object} props
+ * @param {Array<{question, answer}>} [props.faqs] - ordered Faq rows.
+ *   Falls back to FALLBACK_FAQS if omitted or empty.
+ */
+export default function FAQs({ faqs }) {
+  const FAQ_DATA = faqs && faqs.length > 0 ? faqs : FALLBACK_FAQS;
   const [openIndex, setOpenIndex] = useState(0); // Pehla sawal open rahega
 
   const toggleFAQ = (index) => {
@@ -70,7 +76,7 @@ export default function FAQs() {
             const isOpen = openIndex === index;
             return (
               <div 
-                key={index} 
+                key={faq.id || index} 
                 className={`rounded-2xl transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
                   isOpen ? "border-accent/30 bg-white shadow-lg" : "border-neutral-200 bg-white hover:border-accent/20"
                 }`}

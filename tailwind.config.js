@@ -35,8 +35,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Inter", "system-ui", "sans-serif"],
+        // Inter as the default sans font, Poppins added for headings
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
       fontSize: {
         "display-xl": ["4.5rem", { lineHeight: "1.05", letterSpacing: "-0.02em" }],

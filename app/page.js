@@ -1,4 +1,7 @@
 import { SITE, BUSINESS } from "@/lib/constants";
+import { getHeroImages } from "@/lib/db/queries/hero";
+import { listTransformations } from "@/lib/db/queries/transformations";
+import { listFaqs } from "@/lib/db/queries/faqs";
 import Hero from "@/components/home/Hero";
 import About from "@/components/About"; // ← Naya About component yahan import kiya hai
 import ServicesOverview from "@/components/home/ServicesOverview";
@@ -56,7 +59,48 @@ geo: {
 };
 
 /* ─── Home Page Component ────────────────────────────────────────────────── */
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch hero images from the database (managed via /admin/hero).
+  // Falls back to `undefined` on any failure — Hero.jsx itself has a
+  // hardcoded fallback for that case, so a DB hiccup can never blank out
+  // or break the homepage.
+  let heroImages;
+  try {
+    heroImages = await getHeroImages();
+  } catch (error) {
+    console.error("Failed to load hero images, using fallback:", error);
+    heroImages = undefined;
+  }
+
+  // Fetch before/after transformation pairs (managed via /admin/transformations).
+  // Flattened to before/after (and optional video) URL strings here, since
+  // Transformations.jsx (a Client Component) just needs plain strings.
+  let transformations;
+  try {
+    const dbTransformations = await listTransformations();
+    transformations = dbTransformations.map((t) => ({
+      id: t.id,
+      before: t.beforeImage.url,
+      after: t.afterImage.url,
+      video: t.video?.url || null,
+      title: t.title,
+      description: t.description,
+      category: t.category,
+    }));
+  } catch (error) {
+    console.error("Failed to load transformations, using fallback:", error);
+    transformations = undefined;
+  }
+
+  // Fetch FAQs (managed via /admin/faqs).
+  let faqs;
+  try {
+    faqs = await listFaqs();
+  } catch (error) {
+    console.error("Failed to load FAQs, using fallback:", error);
+    faqs = undefined;
+  }
+
   return (
     <>
       {/* JSON-LD structured data */}
@@ -66,13 +110,13 @@ export default function HomePage() {
       />
 
       {/* Page sections */}
-      <Hero />
+      <Hero images={heroImages} />
       <About /> 
       <ServicesOverview />
       <WhyChooseUs />
-      <Transformations /> 
+      <Transformations projects={transformations} /> 
       <Portfolio />
-      <FAQs />
+      <FAQs faqs={faqs} />
       <PreFooterCTA />
     </>
   );

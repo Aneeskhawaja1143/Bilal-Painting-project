@@ -7,16 +7,39 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import { getContactInfo } from "@/lib/db/queries/contactInfo";
 
 /**
  * Contact Information Panel
  * Displayed alongside the contact form.
  * Contains: address, phone, email, opening hours, WhatsApp button.
  */
-export default function ContactInfo() {
-  
-  const whatsappUrl = `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(
-    BUSINESS.whatsappMessage
+export default async function ContactInfo() {
+  let contact = BUSINESS;
+  try {
+    const dbContact = await getContactInfo();
+    if (dbContact) {
+      contact = {
+        phone: dbContact.phone,
+        phoneDisplay: dbContact.phoneDisplay,
+        email: dbContact.email,
+        whatsapp: dbContact.whatsapp,
+        whatsappMessage: dbContact.whatsappMessage,
+        address: {
+          street: dbContact.addressStreet,
+          city: dbContact.addressCity,
+          county: dbContact.addressCounty,
+          postcode: dbContact.addressPostcode,
+          country: dbContact.addressCountry,
+        },
+      };
+    }
+  } catch (error) {
+    console.error("Failed to load contact info, using fallback:", error);
+  }
+
+  const whatsappUrl = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
+    contact.whatsappMessage
   )}`;
 
   return (
@@ -47,10 +70,10 @@ export default function ContactInfo() {
                 Address
               </p>
               <p className="text-sm leading-relaxed text-neutral-200">
-                {BUSINESS.address.street},<br />
-                {BUSINESS.address.city},<br />
-                {BUSINESS.address.postcode},<br />
-                {BUSINESS.address.country}
+                {contact.address.street},<br />
+                {contact.address.city},<br />
+                {contact.address.postcode},<br />
+                {contact.address.country}
               </p>
             </div>
           </div>
@@ -68,10 +91,10 @@ export default function ContactInfo() {
                 Phone
               </p>
               <a
-                href={`tel:${BUSINESS.phone}`}
+                href={`tel:${contact.phone}`}
                 className="text-sm text-neutral-200 transition-colors hover:text-white"
               >
-                {BUSINESS.phoneDisplay}
+                {contact.phoneDisplay}
               </a>
             </div>
           </div>
@@ -89,10 +112,10 @@ export default function ContactInfo() {
                 Email
               </p>
               <a
-                href={`mailto:${BUSINESS.email}`}
+                href={`mailto:${contact.email}`}
                 className="break-all text-sm text-neutral-200 transition-colors hover:text-white"
               >
-                {BUSINESS.email}
+                {contact.email}
               </a>
             </div>
           </div>
@@ -119,8 +142,6 @@ export default function ContactInfo() {
           <ArrowRight size={15} aria-hidden="true" />
         </a>
       </div>
-
-     
     </div>
   );
 }

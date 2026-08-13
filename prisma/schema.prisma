@@ -1,3 +1,5 @@
+
+
 // ─────────────────────────────────────────────────────────────────────────
 // Prisma schema — Bilal Painting & Decorating admin system
 //
@@ -15,8 +17,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
-
 // ─── Auth ───────────────────────────────────────────────────────────────
 
 model AdminUser {
@@ -54,6 +56,7 @@ model MediaAsset {
   portfolioImages       PortfolioImage[]
   transformationBefore  Transformation[] @relation("TransformationBefore")
   transformationAfter   Transformation[] @relation("TransformationAfter")
+  transformationVideo   Transformation[] @relation("TransformationVideo")
   testimonialPhotos     Testimonial[]
 }
 
@@ -143,6 +146,8 @@ model Transformation {
   beforeImageId String
   afterImage    MediaAsset @relation("TransformationAfter", fields: [afterImageId], references: [id])
   afterImageId  String
+  video         MediaAsset? @relation("TransformationVideo", fields: [videoId], references: [id])
+  videoId       String?
 }
 
 // ─── FAQs ───────────────────────────────────────────────────────────────
@@ -183,4 +188,21 @@ model ContactInfo {
   addressCountry    String
   freeQuoteRadius   String
   updatedAt         DateTime @updatedAt
+}
+
+// ─── Contact form submissions ────────────────────────────────────────────
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isRead])
+  @@index([createdAt])
 }

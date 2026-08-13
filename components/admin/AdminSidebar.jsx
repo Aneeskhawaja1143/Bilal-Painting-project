@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Image as ImageIcon,
   Info,
+  TrendingUp,
   Briefcase,
   GalleryHorizontalEnd,
   SplitSquareHorizontal,
@@ -13,6 +14,7 @@ import {
   Quote,
   Phone,
   Images,
+  MessageSquare,
   PaintBucket,
 } from "lucide-react";
 
@@ -20,16 +22,22 @@ const NAV_SECTIONS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Hero", href: "/admin/hero", icon: ImageIcon },
   { label: "About", href: "/admin/about", icon: Info },
+  { label: "Why Choose Us", href: "/admin/why-choose-us", icon: TrendingUp },
   { label: "Services", href: "/admin/services", icon: Briefcase },
   { label: "Portfolio", href: "/admin/portfolio", icon: GalleryHorizontalEnd },
   { label: "Before / After", href: "/admin/transformations", icon: SplitSquareHorizontal },
   { label: "FAQs", href: "/admin/faqs", icon: HelpCircle },
   { label: "Testimonials", href: "/admin/testimonials", icon: Quote },
   { label: "Contact Info", href: "/admin/contact-info", icon: Phone },
+  { label: "Contact Messages", href: "/admin/contact-messages", icon: MessageSquare },
   { label: "Media Library", href: "/admin/media", icon: Images },
 ];
 
-export default function AdminSidebar() {
+/**
+ * @param {object} props
+ * @param {number} [props.unreadCount=0] - shown as a badge on "Contact Messages"
+ */
+export default function AdminSidebar({ unreadCount = 0 }) {
   const pathname = usePathname();
 
   const isActive = (href) =>
@@ -51,6 +59,7 @@ export default function AdminSidebar() {
         {NAV_SECTIONS.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
+          const showBadge = item.href === "/admin/contact-messages" && unreadCount > 0;
           return (
             <Link
               key={item.href}
@@ -62,7 +71,12 @@ export default function AdminSidebar() {
               }`}
             >
               <Icon size={17} className={active ? "text-accent" : "text-neutral-400"} />
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {showBadge && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-white">
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
             </Link>
           );
         })}

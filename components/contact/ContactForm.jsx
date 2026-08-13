@@ -110,6 +110,9 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prevent duplicate submissions while a request is already in flight.
+    if (status === "loading") return;
+
     // Mark all fields as touched
     setTouched({ name: true, email: true, phone: true, message: true });
 
@@ -121,9 +124,32 @@ export default function ContactForm() {
 
     setStatus("loading");
 
-    // Simulate API call (replace with real endpoint)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1800));
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || undefined,
+          subject:
+            SERVICE_OPTIONS.find((opt) => opt.value === form.service)?.label ||
+            form.service ||
+            undefined,
+          message: form.message,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        if (data.fieldErrors) {
+          setErrors((prev) => ({ ...prev, ...data.fieldErrors }));
+        }
+        setStatus("error");
+        return;
+      }
+
       setStatus("success");
       setForm(INITIAL_STATE);
       setTouched({});
@@ -399,7 +425,7 @@ export default function ContactForm() {
           )}
         </button>
 
-        {/* WhatsApp alt */}
+        {/* WhatsApp alt (FIXED: added <a tag) */}
         <div className="mt-3 text-center">
           <p className="text-xs text-neutral-400">
             Prefer instant chat?{" "}

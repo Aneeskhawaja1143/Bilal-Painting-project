@@ -3,7 +3,34 @@ import Image from "next/image";
 import { Phone, ArrowRight, Star, CheckCircle } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 
-export default function Hero() {
+/**
+ * Fallback images — used only if no `images` prop is passed, or the DB
+ * returns an empty array.
+ */
+const FALLBACK_IMAGES = [
+  {
+    id: "fallback-1",
+    altText: "Living room interior painting transformation by Bilal Painting & Decorating UK",
+    media: { url: "/images/aa.jpg" },
+  },
+  {
+    id: "fallback-2",
+    altText: "Professional paint roller applying fresh paint to interior wall by Bilal Painting",
+    media: { url: "/images/paintroller.avif" },
+  },
+  {
+    id: "fallback-3",
+    altText: "Premium paint boxes and decorating supplies used by Bilal Painting UK",
+    media: { url: "/images/paintboxes.jpg" },
+  },
+  {
+    id: "fallback-4",
+    altText: "Commercial office decorating project completed by Bilal Painting & Decorating UK",
+    media: { url: "/images/office.jpg" },
+  },
+];
+
+export default function Hero({ images }) {
   // SEO Updates: 4th badge changed to "500+ Projects Completed"
   const trustBadges = [
     "Free Quotations",
@@ -11,6 +38,8 @@ export default function Hero() {
     "14+ Years Experience",
     "500+ Projects Completed",
   ];
+
+  const heroImages = images && images.length > 0 ? images : FALLBACK_IMAGES;
 
   return (
     <section
@@ -141,49 +170,24 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Right Side: 2×2 Image Grid ── */}
+        {/* ── Right Side: Dynamic Image Grid ── */}
         <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 relative mt-6 sm:mt-8 lg:mt-0 z-20 animate-fadeInRight">
-          {/* Image 1 */}
-          <div className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl">
-            <Image 
-              src="/images/room.jpg" 
-              alt="Living room interior painting transformation by Bilal Painting & Decorating UK" 
-              fill 
-              className="object-cover"
-              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
-              priority
-            />
-          </div>
-          {/* Image 2 */}
-          <div className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl">
-            <Image 
-              src="/images/paintroller.avif" 
-              alt="Professional paint roller applying fresh paint to interior wall by Bilal Painting" 
-              fill 
-              className="object-cover"
-              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
-            />
-          </div>
-          {/* Image 3 */}
-          <div className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl">
-            <Image 
-              src="/images/paintboxes.jpg" 
-              alt="Premium paint boxes and decorating supplies used by Bilal Painting UK" 
-              fill 
-              className="object-cover"
-              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
-            />
-          </div>
-          {/* Image 4 */}
-          <div className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl">
-            <Image 
-              src="/images/office.jpg" 
-              alt="Commercial office decorating project completed by Bilal Painting & Decorating UK" 
-              fill 
-              className="object-cover"
-              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
-            />
-          </div>
+          {heroImages.map((image, index) => (
+            <div
+              key={image.id}
+              className="relative aspect-square sm:aspect-auto sm:h-48 md:h-56 lg:h-64 xl:h-72 w-full rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.04] hover:shadow-2xl"
+            >
+              <Image
+                src={image.media.url}
+                alt={image.altText || "Painting and decorating work by Bilal Painting & Decorating UK"}
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
+                priority={index === 0}
+                unoptimized={image.media.url.startsWith("http")}
+              />
+            </div>
+          ))}
         </div>
       </div>
 

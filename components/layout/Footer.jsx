@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image"; // <--- Yeh line add karni hai
+import Image from "next/image";
 import {
   PaintBucket,
   MapPin,
@@ -12,6 +12,7 @@ import {
   Heart,
 } from "lucide-react";
 import { BUSINESS, NAV_LINKS, SITE } from "@/lib/constants";
+import { getContactInfo } from "@/lib/db/queries/contactInfo";
 
 /**
  * Site-wide footer with:
@@ -22,8 +23,29 @@ import { BUSINESS, NAV_LINKS, SITE } from "@/lib/constants";
  * - Social media links
  * - Legal copyright line
  */
-export default function Footer() {
+export default async function Footer() {
   const currentYear = new Date().getFullYear();
+
+  let contact = BUSINESS;
+  try {
+    const dbContact = await getContactInfo();
+    if (dbContact) {
+      contact = {
+        phone: dbContact.phone,
+        phoneDisplay: dbContact.phoneDisplay,
+        email: dbContact.email,
+        address: {
+          street: dbContact.addressStreet,
+          city: dbContact.addressCity,
+          county: dbContact.addressCounty,
+          postcode: dbContact.addressPostcode,
+          country: dbContact.addressCountry,
+        },
+      };
+    }
+  } catch (error) {
+    console.error("Failed to load contact info, using fallback:", error);
+  }
 
   const serviceLinks = [
     { label: "Interior Painting", href: "/services#interior" },
@@ -51,22 +73,19 @@ export default function Footer() {
               aria-label="Bilal Painting & Decorating — Home"
             >
               <Image 
-                  src="/images/logo.png" // <--- Yahan se '/public' hata diya hai
-                  alt="Bilal Painting Logo" 
-                  width={220} 
-                  height={70} 
-                  className="w-[150px] md:w-[180px] lg:w-[200px] h-auto object-contain" 
-                  priority 
-                />
+                src="/images/logo.png"
+                alt="Bilal Painting Logo" 
+                width={220} 
+                height={70} 
+                className="w-[150px] md:w-[180px] lg:w-[200px] h-auto object-contain" 
+                priority 
+              />
             </Link>
 
             <p className="text-sm leading-relaxed text-neutral-400 mb-6 max-w-xs sm:text-base">
               Premium painting and decorating services across the UK. Trusted
               by homeowners and businesses for over 14 years.
             </p>
-
-            {/* Social icons with enhanced styling */}
-           
           </div>
 
           {/* ── Column 2: Quick Links ─────────────────────────────────── */}
@@ -141,37 +160,37 @@ export default function Footer() {
                   <MapPin size={15} className="text-accent transition-all duration-300 group-hover:scale-110" aria-hidden="true" />
                 </span>
                 <p className="text-sm text-neutral-400 leading-relaxed transition-colors duration-300 group-hover:text-neutral-300 md:text-base">
-                  {BUSINESS.address.street},
+                  {contact.address.street},
                   <br />
-                  {BUSINESS.address.city}, {BUSINESS.address.postcode}
+                  {contact.address.city}, {contact.address.postcode}
                   <br />
-                  {BUSINESS.address.country}
+                  {contact.address.country}
                 </p>
               </div>
 
-              {/* Phone */}
+              {/* Phone (FIXED: added <a tag) */}
               <div className="flex items-center gap-3.5 group">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/8 transition-all duration-300 group-hover:bg-accent/20">
                   <Phone size={15} className="text-accent transition-all duration-300 group-hover:scale-110" aria-hidden="true" />
                 </span>
                 <a
-                  href={`tel:${BUSINESS.phone}`}
+                  href={`tel:${contact.phone}`}
                   className="text-sm text-neutral-400 transition-all duration-300 hover:text-white md:text-base"
                 >
-                  {BUSINESS.phoneDisplay}
+                  {contact.phoneDisplay}
                 </a>
               </div>
 
-              {/* Email */}
+              {/* Email (FIXED: added <a tag) */}
               <div className="flex items-center gap-3.5 group">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/8 transition-all duration-300 group-hover:bg-accent/20">
                   <Mail size={15} className="text-accent transition-all duration-300 group-hover:scale-110" aria-hidden="true" />
                 </span>
                 <a
-                  href={`mailto:${BUSINESS.email}`}
+                  href={`mailto:${contact.email}`}
                   className="text-sm text-neutral-400 transition-all duration-300 hover:text-white break-all md:text-base"
                 >
-                  {BUSINESS.email}
+                  {contact.email}
                 </a>
               </div>
             </address>
@@ -187,7 +206,7 @@ export default function Footer() {
               &copy; {currentYear} {BUSINESS.name}. All rights reserved.
             </p>
             <p className="flex items-center gap-1.5 text-xs text-neutral-500 md:text-sm">
-              Crafted with{" "}
+              Craftswith{" "}
               <Heart 
                 size={12} 
                 className="text-accent transition-all duration-300 hover:scale-125 hover:rotate-12" 

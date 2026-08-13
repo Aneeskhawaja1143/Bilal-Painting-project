@@ -1,14 +1,29 @@
 import Image from "next/image";
+import { listPortfolioImages } from "@/lib/db/queries/portfolio";
 
-// Nayi Portfolio Images ke paths (Make sure to add these images in your public/images folder)
-const PORTFOLIO_IMAGES = [
-  { src: "/images/port-1.jpg", alt: "Modern living room interior painting project completed in Birmingham" },
-  { src: "/images/port-2.jpg", alt: "Freshly painted exterior of a residential house in West Midlands" },
-  { src: "/images/port-3.jpg", alt: "Commercial office space decorating and painting project" },
-  { src: "/images/port-4.jpg", alt: "Elegant wallpaper installation and feature wall in a bedroom" },
+// Fallback images — used only if the database has no portfolio images yet.
+const FALLBACK_IMAGES = [
+  { id: "fallback-1", url: "/images/port-1.jpg", altText: "Modern living room interior painting project completed in Birmingham" },
+  { id: "fallback-2", url: "/images/port-2.jpg", altText: "Freshly painted exterior of a residential house in West Midlands" },
+  { id: "fallback-3", url: "/images/port-3.jpg", altText: "Commercial office space decorating and painting project" },
+  { id: "fallback-4", url: "/images/port-4.jpg", altText: "Elegant wallpaper installation and feature wall in a bedroom" },
 ];
 
-export default function Portfolio() {
+export default async function Portfolio() {
+  let images = FALLBACK_IMAGES;
+  try {
+    const dbImages = await listPortfolioImages();
+    if (dbImages.length > 0) {
+      images = dbImages.map((img) => ({
+        id: img.id,
+        url: img.media.url,
+        altText: img.altText,
+      }));
+    }
+  } catch (error) {
+    console.error("Failed to load portfolio images, using fallback:", error);
+  }
+
   return (
     <section className="section-padding bg-white" aria-labelledby="portfolio-heading">
       <div className="container-custom">
@@ -27,17 +42,18 @@ export default function Portfolio() {
 
         {/* Image Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 animate-fadeInUp" style={{ animationDelay: "200ms" }}>
-          {PORTFOLIO_IMAGES.map((img, index) => (
+          {images.map((img) => (
             <div 
-              key={index} 
+              key={img.id} 
               className="group relative w-full overflow-hidden rounded-2xl bg-neutral-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl aspect-[4/3] lg:aspect-[16/10]"
             >
               <Image
-                src={img.src}
-                alt={img.alt}
+                src={img.url}
+                alt={img.altText}
                 fill
                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                unoptimized={img.url.startsWith("http")}
               />
               
               {/* Hover Overlay */}
