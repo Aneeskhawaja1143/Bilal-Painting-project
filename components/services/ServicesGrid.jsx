@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { SERVICES } from "@/lib/constants";
+import { listServices } from "@/lib/db/queries/services";
 
 /**
  * Map icon name strings to Lucide components.
@@ -25,7 +26,25 @@ const ICON_MAP = {
  * Responsive 2-column grid of detailed service cards.
  * Each card contains: icon, badge, title, description, feature list, CTA.
  */
-export default function ServicesGrid() {
+export default async function ServicesGrid() {
+  let services = SERVICES.map((s) => ({ ...s, anchorId: s.id }));
+  try {
+    const dbServices = await listServices();
+    if (dbServices.length > 0) {
+      services = dbServices.map((s) => ({
+        id: s.id,
+        anchorId: s.slug,
+        icon: s.icon,
+        title: s.title,
+        description: s.description,
+        features: s.features,
+        badge: s.badge,
+      }));
+    }
+  } catch (error) {
+    console.error("Failed to load services, using fallback:", error);
+  }
+
   return (
     <section
       className="section-padding bg-white overflow-hidden relative"
@@ -51,12 +70,12 @@ export default function ServicesGrid() {
         </h2>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {SERVICES.map((service, index) => {
+          {services.map((service, index) => {
             const Icon = ICON_MAP[service.icon];
             return (
               <article
                 key={service.id}
-                id={service.id}
+                id={service.anchorId}
                 className="group relative flex flex-col rounded-2xl border border-neutral-100 bg-white p-6 shadow-card transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 hover:border-accent/20 md:p-7 lg:p-8 scroll-mt-24"
                 style={{
                   animationDelay: `${index * 100}ms`,
@@ -93,7 +112,7 @@ export default function ServicesGrid() {
                     </div>
                     {/* Title */}
                     <h3
-                      id={`service-title-${service.id}`}
+                      id={`service-title-${service.anchorId}`}
                       className="text-xl font-bold text-primary transition-colors duration-300 group-hover:text-accent md:text-2xl"
                     >
                       {service.title}

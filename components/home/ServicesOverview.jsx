@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { HOME_SERVICES } from "@/lib/constants";
+import { listServices } from "@/lib/db/queries/services";
 
 /**
  * Map icon name strings from constants to actual Lucide components.
@@ -25,7 +26,24 @@ const ICON_MAP = {
  * 4 responsive service cards displayed in a 2x2 grid on tablet,
  * 4-column on desktop.
  */
-export default function ServicesOverview() {
+export default async function ServicesOverview() {
+  let services = HOME_SERVICES.map((s) => ({ ...s, href: s.href }));
+  try {
+    const dbServices = await listServices();
+    const homeServices = dbServices.filter((s) => s.showOnHome);
+    if (homeServices.length > 0) {
+      services = homeServices.map((s) => ({
+        id: s.id,
+        icon: s.icon,
+        title: s.title,
+        description: s.description,
+        href: `/services#${s.slug}`,
+      }));
+    }
+  } catch (error) {
+    console.error("Failed to load services, using fallback:", error);
+  }
+
   return (
     <section
       className="section-padding bg-white overflow-hidden relative"
@@ -53,12 +71,11 @@ export default function ServicesOverview() {
 
         {/* Service Cards Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-12 lg:mt-16">
-          {HOME_SERVICES.map((service, index) => {
+          {services.map((service, index) => {
             const Icon = ICON_MAP[service.icon];
             return (
               <article
                 key={service.id}
-                // UI FIX: Added border, clear shadow-md, and stronger hover shadow (shadow-2xl)
                 className="group relative flex flex-col rounded-2xl bg-white border border-neutral-200 shadow-md p-6 transition-all duration-500 hover:shadow-2xl hover:border-accent/40 hover:-translate-y-2 md:p-7 lg:p-8"
                 style={{ 
                   animationDelay: `${index * 100}ms`,

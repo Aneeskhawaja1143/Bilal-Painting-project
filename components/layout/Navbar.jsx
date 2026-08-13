@@ -2,15 +2,24 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image"; // <--- Yeh line add karni hai
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, PaintBucket } from "lucide-react";
 import { BUSINESS, NAV_LINKS } from "@/lib/constants";
 
-export default function Navbar() {
+/**
+ * @param {object} props
+ * @param {string} [props.phone] - tel: link value, e.g. "+44 7722186708".
+ *   Falls back to BUSINESS.phone if omitted (DB unavailable upstream).
+ * @param {string} [props.phoneDisplay] - human-readable phone number.
+ */
+export default function Navbar({ phone, phoneDisplay }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+
+  const resolvedPhone = phone || BUSINESS.phone;
+  const resolvedPhoneDisplay = phoneDisplay || BUSINESS.phoneDisplay;
 
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 20);
@@ -58,14 +67,15 @@ export default function Navbar() {
               aria-label="Bilal Painting & Decorating — Home"
             >
               <Image 
-                  src="/images/logo.png" // <--- Yahan se '/public' hata diya hai
-                  alt="Bilal Painting Logo" 
-                  width={220} 
-                  height={70} 
-                  className="w-[150px] md:w-[180px] lg:w-[200px] h-auto object-contain" 
-                  priority 
-                />
+                src="/images/logo.png"
+                alt="Bilal Painting Logo" 
+                width={220} 
+                height={70} 
+                className="w-[150px] md:w-[180px] lg:w-[200px] h-auto object-contain" 
+                priority 
+              />
             </Link>
+
             {/* ── Desktop Navigation ── */}
             <ul
               className="hidden md:flex items-center gap-8 lg:gap-10"
@@ -85,24 +95,25 @@ export default function Navbar() {
               ))}
             </ul>
 
-           {/* ── Desktop CTA ── */}
-<div className="hidden md:flex items-center gap-2 lg:gap-3">
-  <a
-    href={`tel:${BUSINESS.phone}`}
-    className="flex items-center gap-2 text-sm font-medium text-neutral-200 transition-all duration-300 hover:text-white hover:gap-2.5 lg:text-base"
-    aria-label={`Call us on ${BUSINESS.phoneDisplay}`}
-  >
-    <Phone size={15} className="text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-    <span>{BUSINESS.phoneDisplay}</span>
-  </a>
-  <Link
-    href="/contact"
-    className="btn-primary rounded-xl py-2 px-4 text-sm font-semibold shadow-md hover:shadow-lg md:py-3 md:px-5 lg:py-3.5 lg:px-6 lg:text-base"
-    onClick={() => setIsMobileOpen(false)}
-  >
-    <span>Get a Free Quote</span>
-  </Link>
-</div>
+            {/* ── Desktop CTA (FIXED: added <a tag) ── */}
+            <div className="hidden md:flex items-center gap-4 lg:gap-5">
+              <a
+                href={`tel:${resolvedPhone}`}
+                className="flex items-center gap-2 text-sm font-medium text-neutral-200 transition-all duration-300 hover:text-white hover:gap-2.5 lg:text-base"
+                aria-label={`Call us on ${resolvedPhoneDisplay}`}
+              >
+                <Phone size={15} className="text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                <span>{resolvedPhoneDisplay}</span>
+              </a>
+              <Link
+                href="/contact"
+                className="btn-primary rounded-xl py-2 px-4 text-sm font-semibold shadow-md hover:shadow-lg md:py-3 md:px-5 lg:py-3.5 lg:px-6 lg:text-base"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                <span>Get a Free Quote</span>
+              </Link>
+            </div>
+
             {/* ── Mobile Hamburger ── */}
             <button
               type="button"
@@ -137,7 +148,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile Menu Overlay ── (moved outside header) ── */}
+      {/* ── Mobile Menu Overlay ── */}
       <div
         id="mobile-menu"
         role="dialog"
@@ -166,7 +177,7 @@ export default function Navbar() {
               : "translate-x-full opacity-0"
           }`}
         >
-          <div className="flex h-full flex-col overflow-y-autopt-[72px] pb-5 px-5">
+          <div className="flex h-full flex-col overflow-y-auto pt-[72px] pb-5 px-5">
             {/* Close button inside panel */}
             <button
               type="button"
@@ -202,15 +213,15 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* Mobile contact actions */}
+            {/* Mobile contact actions (FIXED: added <a tag) */}
             <div className="mt-auto space-y-3 pt-5 border-t border-white/10">
               <a
-                href={`tel:${BUSINESS.phone}`}
+                href={`tel:${resolvedPhone}`}
                 className="flex items-center justify-center gap-2.5 w-full rounded-xl border border-white/20 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-white/10 hover:border-white/40 md:py-4 md:text-base"
                 onClick={() => setIsMobileOpen(false)}
               >
                 <Phone size={17} className="text-accent" aria-hidden="true" />
-                <span>{BUSINESS.phoneDisplay}</span>
+                <span>{resolvedPhoneDisplay}</span>
               </a>
               <Link
                 href="/contact"

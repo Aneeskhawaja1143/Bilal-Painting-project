@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Phone, ArrowRight, MessageCircle, MapPin } from "lucide-react"; // ← Added MapPin and removed duplicates
+import { Phone, ArrowRight, MessageCircle, MapPin } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import { getContactInfo } from "@/lib/db/queries/contactInfo";
 
 /**
  * Pre-Footer CTA Section
@@ -9,10 +10,27 @@ import { BUSINESS } from "@/lib/constants";
  * - Phone number with click-to-call
  * - Contact page button
  */
-export default function PreFooterCTA() {
-  const whatsappUrl = `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(
-    BUSINESS.whatsappMessage
+export default async function PreFooterCTA() {
+  let contact = BUSINESS;
+  try {
+    const dbContact = await getContactInfo();
+    if (dbContact) {
+      contact = {
+        phone: dbContact.phone,
+        phoneDisplay: dbContact.phoneDisplay,
+        whatsapp: dbContact.whatsapp,
+        whatsappMessage: dbContact.whatsappMessage,
+        freeQuotePolicy: { radius: dbContact.freeQuoteRadius },
+      };
+    }
+  } catch (error) {
+    console.error("Failed to load contact info, using fallback:", error);
+  }
+
+  const whatsappUrl = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
+    contact.whatsappMessage
   )}`;
+  const freeQuoteRadius = contact.freeQuotePolicy?.radius || BUSINESS.freeQuotePolicy.radius;
 
   return (
     <section
@@ -69,7 +87,7 @@ export default function PreFooterCTA() {
             <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 border border-white/20">
               <MapPin size={14} className="text-accent" aria-hidden="true" />
               <span className="text-sm text-white/80">
-                Free site visit &amp; quote within <strong className="text-accent">5 miles</strong>
+                Free site visit &amp; quote within <strong className="text-accent">{freeQuoteRadius} miles</strong>
               </span>
             </div>
 
@@ -113,17 +131,17 @@ export default function PreFooterCTA() {
 
           {/* Action buttons */}
           <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row sm:items-center animate-fadeInRight">
-            {/* Phone */}
+            {/* Phone (FIXED: added <a tag) */}
             <a
-              href={`tel:${BUSINESS.phone}`}
+              href={`tel:${contact.phone}`}
               className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-white px-6 py-4 text-base font-bold text-accent shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-accent sm:w-auto sm:px-7 sm:py-3.5 md:px-8 md:py-4 lg:px-8 lg:py-4"
-              aria-label={`Call us on ${BUSINESS.phoneDisplay}`}
+              aria-label={`Call us on ${contact.phoneDisplay}`}
             >
               <Phone size={20} aria-hidden="true" className="shrink-0" />
-              <span className="whitespace-nowrap">{BUSINESS.phoneDisplay}</span>
+              <span className="whitespace-nowrap">{contact.phoneDisplay}</span>
             </a>
 
-            {/* WhatsApp */}
+            {/* WhatsApp (FIXED: added <a tag) */}
             <a
               href={whatsappUrl}
               target="_blank"

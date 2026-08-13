@@ -9,10 +9,17 @@ import { BUSINESS } from "@/lib/constants";
  * - Pulsing ring animation to draw attention.
  * - Opens wa.me with a pre-filled greeting message.
  * - Accessible label and tooltip on hover.
+ *
+ * @param {object} props
+ * @param {string} [props.whatsapp] - falls back to BUSINESS.whatsapp if omitted.
+ * @param {string} [props.whatsappMessage] - falls back to BUSINESS.whatsappMessage if omitted.
  */
-export default function FloatingWhatsApp() {
+export default function FloatingWhatsApp({ whatsapp, whatsappMessage }) {
   const [isVisible, setIsVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  const resolvedWhatsapp = whatsapp || BUSINESS.whatsapp;
+  const resolvedWhatsappMessage = whatsappMessage || BUSINESS.whatsappMessage;
 
   // Delay appearance for better UX (don't flash immediately on load)
   useEffect(() => {
@@ -20,8 +27,8 @@ export default function FloatingWhatsApp() {
     return () => clearTimeout(timer);
   }, []);
 
-  const whatsappUrl = `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(
-    BUSINESS.whatsappMessage
+  const whatsappUrl = `https://wa.me/${resolvedWhatsapp}?text=${encodeURIComponent(
+    resolvedWhatsappMessage
   )}`;
 
   return (
@@ -48,7 +55,7 @@ export default function FloatingWhatsApp() {
         </div>
       </div>
 
-      {/* WhatsApp Button */}
+      {/* WhatsApp Button (FIXED: added <a tag) */}
       <a
         href={whatsappUrl}
         target="_blank"

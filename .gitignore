@@ -1,2 +1,10 @@
 node_modules
 .next
+
+# Environment variables — never commit real secrets
+.env
+.env.local
+.env*.local
+
+# Prisma generated client (regenerated via `npx prisma generate` / postinstall)
+/node_modules/.prisma

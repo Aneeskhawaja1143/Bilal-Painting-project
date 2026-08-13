@@ -1,6 +1,7 @@
 import { Award, Star, Clock, ThumbsUp } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { WHY_CHOOSE_US, BUSINESS } from "@/lib/constants";
+import { listWhyChooseUs } from "@/lib/db/queries/whyChooseUs";
 
 /**
  * Map icon name strings to Lucide components.
@@ -17,7 +18,15 @@ const ICON_MAP = {
  * Dark background with accent feature cards.
  * Each card shows a stat, icon, title and description.
  */
-export default function WhyChooseUs() {
+export default async function WhyChooseUs() {
+  let items = WHY_CHOOSE_US;
+  try {
+    const dbItems = await listWhyChooseUs();
+    if (dbItems.length > 0) items = dbItems;
+  } catch (error) {
+    console.error("Failed to load Why Choose Us items, using fallback:", error);
+  }
+
   return (
     <section
       className="section-padding relative overflow-hidden bg-primary"
@@ -60,7 +69,7 @@ export default function WhyChooseUs() {
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-12 lg:mt-16">
-          {WHY_CHOOSE_US.map((item, index) => {
+          {items.map((item, index) => {
             const Icon = ICON_MAP[item.icon];
             return (
               <article
@@ -81,7 +90,6 @@ export default function WhyChooseUs() {
                 {/* Stat number — prominent display */}
                 <div className="relative z-10 mb-4">
                   <div
-                    // UI FIX: Responsive font sizes for stats
                     className="text-4xl sm:text-5xl font-black tracking-tighter text-accent lg:text-5xl"
                     aria-label={`${item.stat} ${item.statLabel}`}
                   >
@@ -109,7 +117,6 @@ export default function WhyChooseUs() {
                   <h3 className="mb-3 text-lg sm:text-xl font-bold text-white transition-colors duration-300 group-hover:text-accent">
                     {item.title}
                   </h3>
-                  {/* UI FIX: Increased text size and contrast for readability */}
                   <p className="text-base leading-relaxed text-neutral-300 transition-colors duration-300 group-hover:text-white">
                     {item.description}
                   </p>
@@ -144,7 +151,6 @@ export default function WhyChooseUs() {
               <h3 className="mb-2 text-lg font-bold text-white sm:text-xl">
                 Established in {BUSINESS.founded} — Serving Clients Across the UK
               </h3>
-              {/* UI FIX: Increased readability here too */}
               <p className="text-base leading-relaxed text-neutral-300">
                 With {BUSINESS.yearsExperience} years in the trade and over{" "}
                 {BUSINESS.projectsCompleted} completed projects, Bilal Painting &amp;
