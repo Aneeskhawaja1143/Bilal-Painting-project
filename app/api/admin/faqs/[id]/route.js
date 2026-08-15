@@ -9,4 +9,5 @@ function prepareData(body) {
 export const { PATCH, DELETE } = createItemRouteHandlers(faqsQueries, {
   validate: validateFaq,
   prepareUpdateData: prepareData,
+  revalidatePaths: ["/"],
 });

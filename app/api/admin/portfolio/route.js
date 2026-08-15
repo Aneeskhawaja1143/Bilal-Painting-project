@@ -25,4 +25,5 @@ async function prepareCreateData(body) {
 export const { GET, POST } = createListRouteHandlers(portfolioQueries, {
   validate: validatePortfolioImage,
   prepareCreateData,
+  revalidatePaths: ["/"],
 });

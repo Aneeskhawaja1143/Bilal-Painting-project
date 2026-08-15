@@ -75,4 +75,5 @@ async function prepareCreateData(body) {
 export const { GET, POST } = createListRouteHandlers(transformationsQueries, {
   validate: validateTransformation,
   prepareCreateData,
+  revalidatePaths: ["/"],
 });

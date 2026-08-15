@@ -25,4 +25,5 @@ async function prepareUpdateData(body) {
 export const { PATCH, DELETE } = createItemRouteHandlers(portfolioQueries, {
   validate: validatePortfolioImage,
   prepareUpdateData,
+  revalidatePaths: ["/"],
 });

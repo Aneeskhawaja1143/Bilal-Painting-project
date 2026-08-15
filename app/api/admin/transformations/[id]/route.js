@@ -75,4 +75,5 @@ async function prepareUpdateData(body) {
 export const { PATCH, DELETE } = createItemRouteHandlers(transformationsQueries, {
   validate: validateTransformation,
   prepareUpdateData,
+  revalidatePaths: ["/"],
 });

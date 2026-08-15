@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { updateHeroImage, deleteHeroImage } from "@/lib/db/queries/hero";
+import { revalidatePath } from "next/cache";
 
 /**
  * PATCH /api/admin/hero/images/[id]
@@ -31,6 +32,7 @@ export async function PATCH(request, { params }) {
 
   try {
     const updated = await updateHeroImage(params.id, { altText });
+    revalidatePath("/");
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Failed to update hero image:", error);
@@ -52,6 +54,7 @@ export async function DELETE(_request, { params }) {
 
   try {
     await deleteHeroImage(params.id);
+    revalidatePath("/");
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Failed to delete hero image:", error);

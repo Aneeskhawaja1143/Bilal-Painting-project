@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import { addHeroImage } from "@/lib/db/queries/hero";
 import { validateHeroImage } from "@/lib/validation/hero";
 import { getMediaById } from "@/lib/db/queries/media";
+import { revalidatePath } from "next/cache";
 
 /**
  * POST /api/admin/hero/images
@@ -49,6 +50,7 @@ export async function POST(request) {
       mediaId: body.mediaId,
       altText: body.altText.trim(),
     });
+    revalidatePath("/");
     return NextResponse.json(heroImage, { status: 201 });
   } catch (error) {
     console.error("Failed to add hero image:", error);

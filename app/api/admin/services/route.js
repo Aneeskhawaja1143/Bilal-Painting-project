@@ -27,4 +27,5 @@ async function prepareCreateData(body) {
 export const { GET, POST } = createListRouteHandlers(servicesQueries, {
   validate: validateService,
   prepareCreateData,
+  revalidatePaths: ["/", "/services"],
 });

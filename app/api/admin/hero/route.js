@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { getHeroContent, upsertHeroContent, getHeroImages } from "@/lib/db/queries/hero";
 import { validateHeroContent } from "@/lib/validation/hero";
+import { revalidatePath } from "next/cache";
 
 /**
  * GET /api/admin/hero
@@ -28,10 +29,10 @@ export async function GET() {
  * Body: { badge, headingAccent, headingMain, description, trustBadges }
  * Updates (or creates, if somehow missing) the Hero singleton row.
  *
- * Note: this does NOT affect the public site yet — app/page.js still reads
- * the hardcoded values in lib/constants.js / Hero.jsx. Wiring the public
- * homepage to this data is a separate, later step (per Phase 3 scope:
- * "do not replace any hardcoded frontend content yet").
+ * Note: Hero's images are wired to the public homepage; the text fields
+ * saved here (badge/heading/description/trustBadges) are not yet consumed
+ * by the public Hero.jsx component (a separate, later step). Revalidating
+ * '/' regardless, so it's already correct once that wiring lands.
  */
 export async function PUT(request) {
   const session = await getServerSession(authOptions);
@@ -61,6 +62,7 @@ export async function PUT(request) {
       description: body.description.trim(),
       trustBadges,
     });
+    revalidatePath("/");
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Failed to update hero content:", error);

@@ -15,4 +15,5 @@ function prepareData(body) {
 export const { PATCH, DELETE } = createItemRouteHandlers(whyChooseUsQueries, {
   validate: validateWhyChooseUsItem,
   prepareUpdateData: prepareData,
+  revalidatePaths: ["/"],
 });

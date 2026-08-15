@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { getHeroImages, swapHeroImageOrder } from "@/lib/db/queries/hero";
+import { revalidatePath } from "next/cache";
 
 /**
  * PUT /api/admin/hero/images/reorder
@@ -41,6 +42,7 @@ export async function PUT(request) {
     await swapHeroImageOrder(images[index].id, images[neighborIndex].id);
 
     const updated = await getHeroImages();
+    revalidatePath("/");
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Failed to reorder hero images:", error);

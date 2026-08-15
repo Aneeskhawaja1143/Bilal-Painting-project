@@ -15,4 +15,5 @@ function prepareData(body) {
 export const { GET, POST } = createListRouteHandlers(whyChooseUsQueries, {
   validate: validateWhyChooseUsItem,
   prepareCreateData: prepareData,
+  revalidatePaths: ["/"],
 });

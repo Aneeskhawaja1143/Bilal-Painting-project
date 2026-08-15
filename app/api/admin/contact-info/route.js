@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { getContactInfo, upsertContactInfo } from "@/lib/db/queries/contactInfo";
 import { validateContactInfo } from "@/lib/validation/contactInfo";
+import { revalidatePath } from "next/cache";
 
 /**
  * GET /api/admin/contact-info
@@ -29,11 +30,13 @@ export async function GET() {
  *         addressStreet, addressCity, addressCounty, addressPostcode,
  *         addressCountry, freeQuoteRadius }
  *
- * Note: this does NOT affect the public site yet — Navbar, Footer,
- * ContactInfo.jsx, and PreFooterCTA still read BUSINESS from
- * lib/constants.js. Wiring the public site to this data is a separate,
- * later step, same as every other content module so far except Hero's
- * images.
+ * ContactInfo is read by app/layout.js (Navbar + FloatingWhatsApp props)
+ * and self-fetched by Footer.jsx, ContactInfo.jsx, and PreFooterCTA.jsx —
+ * i.e. it appears on EVERY public page via the root layout, not just one.
+ * revalidatePath('/', 'layout') invalidates every route nested under the
+ * root layout in one call, which is the correct scope for this module
+ * (a narrower revalidatePath('/contact') alone would miss the Navbar/
+ * Footer/PreFooterCTA instances on every other page).
  */
 export async function PUT(request) {
   const session = await getServerSession(authOptions);
@@ -65,6 +68,7 @@ export async function PUT(request) {
       addressCountry: body.addressCountry.trim(),
       freeQuoteRadius: body.freeQuoteRadius.trim(),
     });
+    revalidatePath("/", "layout");
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Failed to update contact info:", error);

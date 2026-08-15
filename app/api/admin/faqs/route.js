@@ -9,4 +9,5 @@ function prepareData(body) {
 export const { GET, POST } = createListRouteHandlers(faqsQueries, {
   validate: validateFaq,
   prepareCreateData: prepareData,
+  revalidatePaths: ["/"],
 });
