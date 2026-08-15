@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import { getAboutContent, upsertAboutContent } from "@/lib/db/queries/about";
 import { validateAboutContent } from "@/lib/validation/about";
 import { getMediaById } from "@/lib/db/queries/media";
+import { revalidatePath } from "next/cache";
 
 /**
  * GET /api/admin/about
@@ -32,10 +33,10 @@ export async function GET() {
  * `imageId` may be null (no image) or the id of an existing MediaAsset
  * (picked via the existing MediaPickerModal — nothing is uploaded here).
  *
- * Note: this does NOT affect the public site yet — About.jsx still reads
- * the hardcoded values in lib/constants.js. Wiring the public About
- * section to this data is a separate, later step, same as Hero's content
- * fields (only Hero's images were wired to the public site so far).
+ * About is fully wired to the public homepage (components/About.jsx reads
+ * this data directly). revalidatePath('/') below is the fix for the
+ * reported bug: without it, a successful DB write here was never
+ * reflected on the statically-cached public page until the next deploy.
  */
 export async function PUT(request) {
   const session = await getServerSession(authOptions);
@@ -87,6 +88,7 @@ export async function PUT(request) {
       experienceYears: body.experienceYears.trim(),
       imageId,
     });
+    revalidatePath("/");
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Failed to update about content:", error);
